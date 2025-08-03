@@ -7,18 +7,17 @@ from urllib.parse import urlparse, urljoin, quote, quote_plus
 from bs4 import BeautifulSoup
 
 from models import LastChapter
-from plugins.client import MangaClient, MangaCard, MangaChapter
 
 
 @dataclass
-class MangaBuddyCard(MangaCard):
+class MangaBuddyCard(Scraper):
     read_url: str
 
     def get_url(self):
         return self.read_url
 
 
-class MangaBuddyClient(MangaClient):
+class MangaBuddyClient(Scraper):
     base_url = urlparse("https://mangabuddy.com/")
     search_url = urljoin(base_url.geturl(), "search")
     search_param = 'q'
