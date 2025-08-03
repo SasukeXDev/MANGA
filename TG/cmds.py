@@ -81,21 +81,18 @@ async def start(client, message):
                                          InlineKeyboardButton(" Close ", callback_data = "close")
                                      ]]))
 
-    # Random emoji reaction
-    myEmoji = ["👍", "👎", "❤", "🔥", "🥰", "👏", "😁", "🤔", "🤯", "😱", "🤬", "😢", "🎉", "🤩", "🤮", "💩", "🙏",
-               "👌", "🕊", "🤡", "🥱", "🥴", "😍", "🐳", "❤‍🔥", "🌚", "🌭", "💯", "🤣", "⚡", "🍌", "🏆", "💔", "🤨",
-               "😐", "🍓", "🍾", "💋", "🖕", "😈", "😴", "😭", "🤓", "👻", "👨‍💻", "👀", "🎃", "🙈", "😇", "😨", "🤝",
-               "✍", "🤗", "🫡", "🎅", "🎄", "☃", "💅", "🤪", "🗿", "🆒", "💘", "🙉", "🦄", "😘", "💊", "🙊", "😎", "👾",
-               "🤷‍♂", "🤷", "🤷‍♀", "😡"]
+    # 🥳 Add Emoji Reaction Effect
+myEmoji = [
+    "👍", "👎", "❤", "🔥", "🥰", "👏", "😁", "🤔",
+    "🤯", "😱", "🤬", "😢", "🎉", "🤩", "🤮", "💩", "🙏"]
     doEmoji = random.choice(myEmoji)
 
-    # Send emoji reaction
     async with httpx.AsyncClient() as client_http:
         await client_http.post(
             f"https://api.telegram.org/bot{client.token}/setMessageReaction",
             json={
-                "chat_id": sent_message.chat.id,
-                "message_id": sent_message.id,
+                "chat_id": sent.chat.id,
+                "message_id": sent.message_id,
                 "reaction": [{
                     "type": "emoji",
                     "emoji": doEmoji,
