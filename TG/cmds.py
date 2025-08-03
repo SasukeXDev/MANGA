@@ -40,15 +40,6 @@ For example:
 @Bot.on_message(filters.command("start"))
 async def start(client, message):
 # Start effects added
-   import random
-   import time
-      
-      effects = [
-        "5046509860389126442",  # 🎉
-        "5104841245755180586",  # 🔥
-        "5107584321108051014"   # 👍
-    ]
-    random_effect = random.choice(effects)
 
 
 
@@ -83,7 +74,7 @@ async def start(client, message):
       f"<blockquote><i>Ping:- {ping}</i></blockquote>"
       "\n\n"
       "<blockquote><i>Check /help for more information.</i></blockquote>"),
-      message_effect_id=random_effect,
+      message_effect_id=5046509860389126442,
       reply_markup=InlineKeyboardMarkup([[        
                                          InlineKeyboardButton(" Dev ", url = "https://github.com/Dra-Sama/mangabot"),
                                          InlineKeyboardButton(" Commands ", url = "https://t.me/WizardBotHelper")
