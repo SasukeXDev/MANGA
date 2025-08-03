@@ -1,6 +1,6 @@
 from .comick import ComickWebs
 #from .mangamob import MangaMobWebs
-#from .mangafire import MangaFireWebs
+from .mangabuddy import MangaBuddy
 
 from .asurascans import AsuraScansWebs
 #from .flamecomics import FlameComicsWebs
