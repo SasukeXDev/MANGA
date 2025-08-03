@@ -63,19 +63,21 @@ async def start(client, message):
   await message.reply_photo(
     photo,
     caption=(
-      "<b><i>Welcome to the best manga pdf bot in telegram!!</i></b>\n"
-      "\n"
-      "<b><i>How to use? Just type the name of some manga you want to keep up to date.</i></b>\n"
-      "\n"
-      "<b><i>For example:</i></b>\n"
-      "<i><code>One Piece</i></code>\n"
-      "\n"
+      "<blockquote><b><i>Welcome to the best manga pdf bot in telegram!!</i></b>\n\n<i>Start downloading manga/manhwa/manhua/webtoons from multiple sources!!</i>\n\n</blockquote>
       f"<b><i>Ping:- {ping}</i></b>"
       "\n"
-      "<b><i>Check /help for more information.</i></b>"),
+      "<blockquote><i>Check /help for more information.</i></blockquote>"),
     reply_markup=InlineKeyboardMarkup([[        
-                                         InlineKeyboardButton('* Repo *', url = "https://github.com/Dra-Sama/mangabot"),
-                                         InlineKeyboardButton("* Support *", url = "https://t.me/WizardBotHelper")
+                                         InlineKeyboardButton(" Dev ", url = "https://github.com/Dra-Sama/mangabot"),
+                                         InlineKeyboardButton(" Commands ", url = "https://t.me/WizardBotHelper")
+                                     ],
+      
+                                      [        
+                                         InlineKeyboardButton(" Database ", url = "https://github.com/Dra-Sama/mangabot"),
+                                         InlineKeyboardButton(" Group Chat ", url = "https://t.me/WizardBotHelper")
+                                     ],
+                                      [        
+                                         InlineKeyboardButton(" Close ", callback = "close")
                                      ]]))
 
 @Bot.on_message(filters.private)
