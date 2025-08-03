@@ -63,7 +63,7 @@ async def start(client, message):
   await message.reply_photo(
     photo,
     caption=(
-      "<blockquote><b><i>Welcome to the best manga pdf bot in telegram!!</i></b>\n\n<i>Start downloading manga/manhwa/manhua/webtoons from multiple sources!!</i>\n\n</blockquote>
+      "<blockquote><b><i>Welcome to the best manga pdf bot in telegram!!</i></b>\n\n<i>Start downloading manga/manhwa/manhua/webtoons from multiple sources!!</i></blockquote>"
       f"<b><i>Ping:- {ping}</i></b>"
       "\n"
       "<blockquote><i>Check /help for more information.</i></blockquote>"),
