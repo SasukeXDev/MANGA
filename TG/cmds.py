@@ -64,8 +64,9 @@ async def start(client, message):
     photo,
     caption=(
       "<blockquote><b><i>Welcome to the best manga pdf bot in telegram!!</i></b>\n\n<i>Start downloading manga/manhwa/manhua/webtoons from multiple sources!!</i></blockquote>"
-      f"<b><i>Ping:- {ping}</i></b>"
-      "\n"
+      "\n\n"
+      f"<blockquote><i>Ping:- {ping}</i><blockquote>"
+      "\n\n"
       "<blockquote><i>Check /help for more information.</i></blockquote>"),
     reply_markup=InlineKeyboardMarkup([[        
                                          InlineKeyboardButton(" Dev ", url = "https://github.com/Dra-Sama/mangabot"),
@@ -79,6 +80,29 @@ async def start(client, message):
                                       [        
                                          InlineKeyboardButton(" Close ", callback_data = "close")
                                      ]]))
+
+    # Random emoji reaction
+    myEmoji = ["👍", "👎", "❤", "🔥", "🥰", "👏", "😁", "🤔", "🤯", "😱", "🤬", "😢", "🎉", "🤩", "🤮", "💩", "🙏",
+               "👌", "🕊", "🤡", "🥱", "🥴", "😍", "🐳", "❤‍🔥", "🌚", "🌭", "💯", "🤣", "⚡", "🍌", "🏆", "💔", "🤨",
+               "😐", "🍓", "🍾", "💋", "🖕", "😈", "😴", "😭", "🤓", "👻", "👨‍💻", "👀", "🎃", "🙈", "😇", "😨", "🤝",
+               "✍", "🤗", "🫡", "🎅", "🎄", "☃", "💅", "🤪", "🗿", "🆒", "💘", "🙉", "🦄", "😘", "💊", "🙊", "😎", "👾",
+               "🤷‍♂", "🤷", "🤷‍♀", "😡"]
+    doEmoji = random.choice(myEmoji)
+
+    # Send emoji reaction
+    async with httpx.AsyncClient() as client_http:
+        await client_http.post(
+            f"https://api.telegram.org/bot{client.token}/setMessageReaction",
+            json={
+                "chat_id": sent_message.chat.id,
+                "message_id": sent_message.id,
+                "reaction": [{
+                    "type": "emoji",
+                    "emoji": doEmoji,
+                    "is_big": True
+                }]
+            }
+        )
 
 @Bot.on_message(filters.private)
 async def on_private_message(client, message):
