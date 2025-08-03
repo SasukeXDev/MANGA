@@ -81,7 +81,7 @@ async def start(client, message):
                                          InlineKeyboardButton(" Close ", callback_data = "close")
                                      ]]))
 
-@Client.on_message(filters.command("start") & filters.private)
+@client.on_message(filters.command("start") & filters.private)
 async def start_handler(client, message):
     effects = [
         "5046509860389126442",  # 🎉
