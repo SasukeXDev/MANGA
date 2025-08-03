@@ -77,7 +77,7 @@ async def start(client, message):
                                          InlineKeyboardButton(" Group Chat ", url = "https://t.me/WizardBotHelper")
                                      ],
                                       [        
-                                         InlineKeyboardButton(" Close ", callback = "close")
+                                         InlineKeyboardButton(" Close ", callback_data = "close")
                                      ]]))
 
 @Bot.on_message(filters.private)
