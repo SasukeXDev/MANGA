@@ -81,19 +81,14 @@ async def start(client, message):
                                          InlineKeyboardButton(" Close ", callback_data = "close")
                                      ]]))
 
-    # 🥳 Add Emoji Reaction Effect
-    effects = [
-        "5046509860389126442",  # 🎉
-        "5104841245755180586",  # 🔥
-        "5107584321108051014"   # 👍
-    ]
-    random_effect = random.choice(effects)
-
-    await client.send_message(
-        chat_id=message.chat.id,
-        text="‎",  # invisible character to allow sending without visible message
-        message_effect_id=int(random_effect),
-        reply_to_message_id=sent.message_id
+    await client.invoke(
+        SendMessage(
+            peer=await client.resolve_peer(message.chat.id),
+            message="‎",  # invisible character
+            random_id=client.rnd_id(),
+            message_effect_id=5104841245755180586,  # 🔥 for example
+            reply_to_msg_id=message.message_id
+        )
     )
 
 
