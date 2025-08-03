@@ -39,6 +39,23 @@ For example:
 
 @Bot.on_message(filters.command("start"))
 async def start(client, message):
+# Start effects added
+      effects = [
+        "5046509860389126442",  # 🎉
+        "5104841245755180586",  # 🔥
+        "5107584321108051014"   # 👍
+    ]
+    random_effect = random.choice(effects)
+
+    await client.send_message(
+        chat_id=message.chat.id,
+        text="Welcome to the Manhwa Bot!",
+        message_effect_id=random_effect
+    )
+
+
+
+
   if Vars.IS_PRIVATE:
     if message.chat.id not in Vars.ADMINS:
       return await message.reply("<code>You cannot use me baby </code>")
@@ -81,21 +98,6 @@ async def start(client, message):
                                       [        
                                          InlineKeyboardButton(" Close ", callback_data = "close")
                                      ]]))
-
-@Bot.on_message(filters.command("start") & filters.private)
-async def start_handler(client, message):
-    effects = [
-        "5046509860389126442",  # 🎉
-        "5104841245755180586",  # 🔥
-        "5107584321108051014"   # 👍
-    ]
-    random_effect = random.choice(effects)
-
-    await client.send_message(
-        chat_id=message.chat.id,
-        text="Welcome to the Manhwa Bot!",
-        message_effect_id=random_effect
-    )
 
 
 
