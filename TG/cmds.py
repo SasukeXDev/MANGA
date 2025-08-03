@@ -1,4 +1,4 @@
-from pyrogram import filters
+from pyrogram import filters, Client
 from pyrogram.errors import FloodWait
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -47,13 +47,6 @@ async def start(client, message):
     ]
     random_effect = random.choice(effects)
 
-    await client.send_message(
-        chat_id=message.chat.id,
-        text="Welcome to the Manhwa Bot!",
-        message_effect_id=random_effect
-    )
-
-
 
 
   if Vars.IS_PRIVATE:
@@ -79,11 +72,12 @@ async def start(client, message):
   photo = random.choice(Vars.PICS)
   ping = time.strftime("%Hh%Mm%Ss", time.gmtime(time.time() - Vars.PING))
   await message.reply_photo(
+    chat_id=message.chat.id,
     photo,
     caption=(
       "<blockquote><b><i>Welcome to the best manga pdf bot in telegram!!</i></b>\n\n<i>Start downloading manga/manhwa/manhua/webtoons from multiple sources!!</i></blockquote>"
       "\n\n"
-      f"<blockquote><i>Ping:- {ping}</i><blockquote>"
+      f"<blockquote><i>Ping:- {ping}</i></blockquote>"
       "\n\n"
       "<blockquote><i>Check /help for more information.</i></blockquote>"),
     reply_markup=InlineKeyboardMarkup([[        
@@ -99,7 +93,15 @@ async def start(client, message):
                                          InlineKeyboardButton(" Close ", callback_data = "close")
                                      ]]))
 
-
+    # Optionally: If you want to add an effect, send a message separately with the effect ID
+    try:
+        await client.send_message(
+            chat_id=message.chat.id,
+            text="✨",
+            message_effect_id=random_effect  # Only works if using Bot API 7.0+ and effects supported
+        )
+    except Exception as e:
+        print("Effect failed:", e)
 
 
 @Bot.on_message(filters.private)
