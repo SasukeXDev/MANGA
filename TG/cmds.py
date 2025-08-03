@@ -66,7 +66,6 @@ async def start(client, message):
   photo = random.choice(Vars.PICS)
   ping = time.strftime("%Hh%Mm%Ss", time.gmtime(time.time() - Vars.PING))
   await message.reply_photo(
-    chat_id=message.chat.id,
     photo,
     caption=(
       "<blockquote><b><i>Welcome to the best manga pdf bot in telegram!!</i></b>\n\n<i>Start downloading manga/manhwa/manhua/webtoons from multiple sources!!</i></blockquote>"
@@ -75,7 +74,7 @@ async def start(client, message):
       "\n\n"
       "<blockquote><i>Check /help for more information.</i></blockquote>"),
       message_effect_id=5046509860389126442,
-      reply_markup=InlineKeyboardMarkup([[        
+    reply_markup=InlineKeyboardMarkup([[        
                                          InlineKeyboardButton(" Dev ", url = "https://github.com/Dra-Sama/mangabot"),
                                          InlineKeyboardButton(" Commands ", url = "https://t.me/WizardBotHelper")
                                      ],
