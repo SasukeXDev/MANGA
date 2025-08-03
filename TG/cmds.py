@@ -81,15 +81,21 @@ async def start(client, message):
                                          InlineKeyboardButton(" Close ", callback_data = "close")
                                      ]]))
 
-    await client.invoke(
-        SendMessage(
-            peer=await client.resolve_peer(message.chat.id),
-            message="‎",  # invisible character
-            random_id=client.rnd_id(),
-            message_effect_id=5104841245755180586,  # 🔥 for example
-            reply_to_msg_id=message.message_id
-        )
+@Client.on_message(filters.command("start") & filters.private)
+async def start_handler(client, message):
+    effects = [
+        "5046509860389126442",  # 🎉
+        "5104841245755180586",  # 🔥
+        "5107584321108051014"   # 👍
+    ]
+    random_effect = random.choice(effects)
+
+    await client.send_message(
+        chat_id=message.chat.id,
+        text="Welcome to the Manhwa Bot!",
+        message_effect_id=random_effect
     )
+
 
 
 
