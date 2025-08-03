@@ -82,24 +82,16 @@ async def start(client, message):
                                      ]]))
 
     # 🥳 Add Emoji Reaction Effect
-myEmoji = [
-    "👍", "👎", "❤", "🔥", "🥰", "👏", "😁", "🤔",
-    "🤯", "😱", "🤬", "😢", "🎉", "🤩", "🤮", "💩", "🙏"]
+@Client.on_message(filters.command("start"))
+async def start_handler(client, message):
+    myEmoji = [
+        "👍", "👎", "❤", "🔥", "🥰", "👏", "😁", "🤔",
+        "🤯", "😱", "🤬", "😢", "🎉", "🤩", "🤮", "💩", "🙏"
+    ]
     doEmoji = random.choice(myEmoji)
 
-    async with httpx.AsyncClient() as client_http:
-        await client_http.post(
-            f"https://api.telegram.org/bot{client.token}/setMessageReaction",
-            json={
-                "chat_id": sent.chat.id,
-                "message_id": sent.message_id,
-                "reaction": [{
-                    "type": "emoji",
-                    "emoji": doEmoji,
-                    "is_big": True
-                }]
-            }
-        )
+
+
 
 @Bot.on_message(filters.private)
 async def on_private_message(client, message):
