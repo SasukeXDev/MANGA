@@ -82,7 +82,7 @@ async def start(client, message):
                                      ]]))
 
     # 🥳 Add Emoji Reaction Effect
-@Client.on_message(filters.command("start"))
+@client.on_message(filters.command("start"))
 async def start_handler(client, message):
     myEmoji = [
         "👍", "👎", "❤", "🔥", "🥰", "👏", "😁", "🤔",
