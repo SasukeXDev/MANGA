@@ -40,6 +40,9 @@ For example:
 @Bot.on_message(filters.command("start"))
 async def start(client, message):
 # Start effects added
+   import random
+   import time
+      
       effects = [
         "5046509860389126442",  # 🎉
         "5104841245755180586",  # 🔥
@@ -80,7 +83,8 @@ async def start(client, message):
       f"<blockquote><i>Ping:- {ping}</i></blockquote>"
       "\n\n"
       "<blockquote><i>Check /help for more information.</i></blockquote>"),
-    reply_markup=InlineKeyboardMarkup([[        
+      message_effect_id=random_effect,
+      reply_markup=InlineKeyboardMarkup([[        
                                          InlineKeyboardButton(" Dev ", url = "https://github.com/Dra-Sama/mangabot"),
                                          InlineKeyboardButton(" Commands ", url = "https://t.me/WizardBotHelper")
                                      ],
@@ -92,16 +96,6 @@ async def start(client, message):
                                       [        
                                          InlineKeyboardButton(" Close ", callback_data = "close")
                                      ]]))
-
-    # Optionally: If you want to add an effect, send a message separately with the effect ID
-    try:
-        await client.send_message(
-            chat_id=message.chat.id,
-            text="✨",
-            message_effect_id=random_effect  # Only works if using Bot API 7.0+ and effects supported
-        )
-    except Exception as e:
-        print("Effect failed:", e)
 
 
 @Bot.on_message(filters.private)
