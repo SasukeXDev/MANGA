@@ -1,3 +1,4 @@
+from .scraper import Scraper
 import re
 from dataclasses import dataclass
 from typing import List, AsyncIterable
