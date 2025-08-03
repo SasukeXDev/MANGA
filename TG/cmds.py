@@ -82,14 +82,19 @@ async def start(client, message):
                                      ]]))
 
     # 🥳 Add Emoji Reaction Effect
-@client.on_message(filters.command("start"))
-async def start_handler(client, message):
-    myEmoji = [
-        "👍", "👎", "❤", "🔥", "🥰", "👏", "😁", "🤔",
-        "🤯", "😱", "🤬", "😢", "🎉", "🤩", "🤮", "💩", "🙏"
+    effects = [
+        "5046509860389126442",  # 🎉
+        "5104841245755180586",  # 🔥
+        "5107584321108051014"   # 👍
     ]
-    doEmoji = random.choice(myEmoji)
+    random_effect = random.choice(effects)
 
+    await client.send_message(
+        chat_id=message.chat.id,
+        text="‎",  # invisible character to allow sending without visible message
+        message_effect_id=int(random_effect),
+        reply_to_message_id=sent.message_id
+    )
 
 
 
