@@ -64,7 +64,7 @@ async def start(client, message):
       
 
   photo = random.choice(Vars.PICS)
-  effect_id = random.choice(Vars.EFF)
+  message_effect_id = random.choice(Vars.EFF)
   ping = time.strftime("%Hh%Mm%Ss", time.gmtime(time.time() - Vars.PING))
   await message.reply_photo(
     photo,
@@ -75,7 +75,7 @@ async def start(client, message):
       f"<blockquote><i>Ping:- {ping}</i></blockquote>"
       "\n\n"
       "<blockquote><i>Check /help for more information.</i></blockquote>"),
-    message_effect_id=effect_id,
+    message_effect_id=message_effect_id,
     reply_markup=InlineKeyboardMarkup([[        
                                          InlineKeyboardButton(" Dev ", url = "https://t.me/Aptxd"),
                                          InlineKeyboardButton(" Commands ", url = "commands")
