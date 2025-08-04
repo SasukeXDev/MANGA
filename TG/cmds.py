@@ -35,6 +35,12 @@ For example:
 <blockquote><b>Updates Channel : @Wizard_bots</b></blockquote>
 """
 
+EFFECT_IDS = [
+    5046509860389126442,  # Fireworks
+    5046509860389126443,  # Balloons
+    5046509860389126444,  # Hearts
+    5046509860389126445,  # Stars
+]
 
 
 @Bot.on_message(filters.command("start"))
@@ -73,15 +79,15 @@ async def start(client, message):
       f"<blockquote><i>Ping:- {ping}</i></blockquote>"
       "\n\n"
       "<blockquote><i>Check /help for more information.</i></blockquote>"),
-      message_effect_id=5046509860389126442,
+      message_effect_id=random.choice(EFFECT_IDS),
     reply_markup=InlineKeyboardMarkup([[        
-                                         InlineKeyboardButton(" Dev ", url = "https://github.com/Dra-Sama/mangabot"),
-                                         InlineKeyboardButton(" Commands ", url = "https://t.me/WizardBotHelper")
+                                         InlineKeyboardButton(" Dev ", url = "https://t.me/Aptxd"),
+                                         InlineKeyboardButton(" Commands ", url = "commands")
                                      ],
       
                                       [        
-                                         InlineKeyboardButton(" Database ", url = "https://github.com/Dra-Sama/mangabot"),
-                                         InlineKeyboardButton(" Group Chat ", url = "https://t.me/WizardBotHelper")
+                                         InlineKeyboardButton(" Database ", url = "https://t.me/undefined"),
+                                         InlineKeyboardButton(" Group Chat ", url = "https://t.me/Crunchyroll_Support")
                                      ],
                                       [        
                                          InlineKeyboardButton(" Close ", callback_data = "close")
