@@ -76,16 +76,16 @@ async def start(client, message):
       "<blockquote><i>Check /help for more information.</i></blockquote>"),
     message_effect_id=message_effect_id,
     reply_markup=InlineKeyboardMarkup([[        
-                                         InlineKeyboardButton(" Dev ", url = "https://t.me/Aptxd"),
-                                         InlineKeyboardButton(" Commands ", url = "commands")
+                                         InlineKeyboardButton("Dev", url = "https://t.me/Aptxd"),
+                                         InlineKeyboardButton("Commands", callback_data = "commands")
                                      ],
       
                                       [        
-                                         InlineKeyboardButton(" Database ", url = "https://t.me/undefined"),
-                                         InlineKeyboardButton(" Group Chat ", url = "https://t.me/Crunchyroll_Support")
+                                         InlineKeyboardButton("Database", url = "https://t.me/undefined"),
+                                         InlineKeyboardButton("Group Chat", url = "https://t.me/Crunchyroll_Support")
                                      ],
                                       [        
-                                         InlineKeyboardButton(" Close ", callback_data = "close")
+                                         InlineKeyboardButton("Close", callback_data = "close")
                                      ]]))
 
 
