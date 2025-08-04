@@ -78,7 +78,7 @@ async def start(client, message):
       f"<blockquote><i>Ping:- {ping}</i></blockquote>"
       "\n\n"
       "<blockquote><i>Check /help for more information.</i></blockquote>"),
-      random_effect = random.choice(effects)
+      random_effect = random.choice(effects),
      # message_effect_id=random.choice(Vars.EFF),
     reply_markup=InlineKeyboardMarkup([[        
                                          InlineKeyboardButton(" Dev ", url = "https://t.me/Aptxd"),
