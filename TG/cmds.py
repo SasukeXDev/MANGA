@@ -68,7 +68,6 @@ async def start(client, message):
   ping = time.strftime("%Hh%Mm%Ss", time.gmtime(time.time() - Vars.PING))
   await message.reply_photo(
     photo,
-    message_effect_id,
     caption=(
       "<blockquote><b><i>Welcome to the best manga pdf bot in telegram!!</i></b>\n\n<i>Start downloading manga/manhwa/manhua/webtoons from multiple sources!!</i></blockquote>"
       "\n\n"
