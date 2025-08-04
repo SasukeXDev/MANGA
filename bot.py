@@ -39,7 +39,7 @@ class Vars:
     5046509860389126442,  # Fireworks
     5046509860389126443,  # Balloons
     5046509860389126444,  # Hearts
-    5046509860389126445  # Stars
+    5046509860389126445,  # Stars
   )
   PICS = (
     "https://ik.imagekit.io/jbxs2z512/hd-anime-prr1y1k5gqxfcgpv.jpg?updatedAt=1748487947183",
