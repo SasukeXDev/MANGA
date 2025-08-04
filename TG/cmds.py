@@ -61,14 +61,10 @@ async def start(client, message):
         await get_token(message, user_id)
         await sts.delete()
       return
-
-      effects = [
-        5046509860389126442,
-        5104841245755180586,
-        5107584321108051014
-    ]
+      
 
   photo = random.choice(Vars.PICS)
+  message_effect_id=random.choice(Vars.EFF)
   ping = time.strftime("%Hh%Mm%Ss", time.gmtime(time.time() - Vars.PING))
   await message.reply_photo(
     photo,
@@ -78,7 +74,6 @@ async def start(client, message):
       f"<blockquote><i>Ping:- {ping}</i></blockquote>"
       "\n\n"
       "<blockquote><i>Check /help for more information.</i></blockquote>"),
-      random_effect = random.choice(effects),
      # message_effect_id=random.choice(Vars.EFF),
     reply_markup=InlineKeyboardMarkup([[        
                                          InlineKeyboardButton(" Dev ", url = "https://t.me/Aptxd"),
