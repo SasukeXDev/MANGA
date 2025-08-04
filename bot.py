@@ -35,6 +35,12 @@ class Vars:
   SHORTENER = os.environ.get("SHORTENER", None)
   SHORTENER_API = os.environ.get("SHORTENER_API", "") # put {} for url, ex: shornter.api?url={}
   DURATION = int(os.environ.get("DURATION", "20")) # hrs
+  EFF = (
+    5046509860389126442,  # Fireworks
+    5046509860389126443,  # Balloons
+    5046509860389126444,  # Hearts
+    5046509860389126445,  # Stars
+  )
   PICS = (
     "https://ik.imagekit.io/jbxs2z512/hd-anime-prr1y1k5gqxfcgpv.jpg?updatedAt=1748487947183",
     "https://ik.imagekit.io/jbxs2z512/naruto_GxcPgSeOy.jpg?updatedAt=1748486799631",
