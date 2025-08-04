@@ -32,7 +32,7 @@ For example:
 
 <blockquote expandable><i>Then you will have to choose the language of the manga. Depending on this language, you will be able to choose the website where you could download the manga. Here you will have the option to subscribe, or to choose a chapter to download. The chapters are sorted according to the website.</i></blockquote>
 
-<blockquote><b>Updates Channel : @Wizard_bots</b></blockquote>
+<blockquote><b>Updates Channel : @Uchiha_Developer</b></blockquote>
 """
 
 
@@ -62,6 +62,12 @@ async def start(client, message):
         await sts.delete()
       return
 
+      effects = [
+        5046509860389126442,
+        5104841245755180586,
+        5107584321108051014
+    ]
+
   photo = random.choice(Vars.PICS)
   ping = time.strftime("%Hh%Mm%Ss", time.gmtime(time.time() - Vars.PING))
   await message.reply_photo(
@@ -72,7 +78,8 @@ async def start(client, message):
       f"<blockquote><i>Ping:- {ping}</i></blockquote>"
       "\n\n"
       "<blockquote><i>Check /help for more information.</i></blockquote>"),
-      message_effect_id=random.choice(Vars.EFF),
+      random_effect = random.choice(effects)
+     # message_effect_id=random.choice(Vars.EFF),
     reply_markup=InlineKeyboardMarkup([[        
                                          InlineKeyboardButton(" Dev ", url = "https://t.me/Aptxd"),
                                          InlineKeyboardButton(" Commands ", url = "commands")
