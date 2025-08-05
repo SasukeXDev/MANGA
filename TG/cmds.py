@@ -6,6 +6,7 @@ from .storage import web_data, split_list, plugins_list, users_txt, retry_on_flo
 
 from pyrogram.errors import FloodWait
 import pyrogram.errors
+from pyrogram.enums import ChatType
 
 from bot import Bot, Vars, logger
 
@@ -34,23 +35,6 @@ For example:
 
 <blockquote><b>Updates Channel : @Uchiha_Developer</b></blockquote>
 """
-
-
-@Client.on_message(filters.command("start"))
-async def start_command(client: Client, message: Message):
-    await message.reply("Hey there! I'm alive 😁")
-
-    try:
-        await client.send_reaction(
-            chat_id=message.chat.id,
-            message_id=message.id,
-            emoji="👋",
-            big=True
-            
-        )
-    except Exception as e:
-        print(f"Failed to send reaction: {e}")
-
 
 
 @Bot.on_message(filters.command("start"))
@@ -82,6 +66,7 @@ async def start(client, message):
 
  
   photo = random.choice(Vars.PICS)
+  emoji = random.choice(Vars.EMO)
   message_effect_id = random.choice(Vars.EFF)
   ping = time.strftime("%Hh%Mm%Ss", time.gmtime(time.time() - Vars.PING))
   await message.reply_photo(
@@ -92,6 +77,8 @@ async def start(client, message):
       f"<blockquote><i>Ping:- {ping}</i></blockquote>"
       "\n\n"
       "<blockquote><i>Check /help for more information.</i></blockquote>"),
+    emoji=emoji,
+    big=True,
     message_effect_id=message_effect_id,
     reply_markup=InlineKeyboardMarkup([[        
                                          InlineKeyboardButton("Dev", url = "https://t.me/Aptxd"),
