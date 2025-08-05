@@ -35,6 +35,19 @@ For example:
 <blockquote><b>Updates Channel : @Uchiha_Developer</b></blockquote>
 """
 
+@Client.on_message(filters.command("start"))
+async def start_command(client, message):
+
+    emoji = random.choice(Vars.EMO)
+    try:
+        await client.send_reaction(
+            chat_id=message.chat.id,
+            message_id=message.id,
+            emoji=emoji,
+            big=True
+        )
+    except Exception as e:
+        print(e)
 
 
 
@@ -65,18 +78,7 @@ async def start(client, message):
       return
       
 
-  photo = random.choice(Vars.PICS)
-  emoji = random.choice(Vars.EMO)
-        try:
-        await client.send_reaction(
-            chat_id=message.chat.id,
-            message_id=message.id,
-            emoji=emoji,
-            big=True  # Optional: depends on if you want a big emoji animation
-        )
-    except Exception as e:
-        print("Failed to send reaction:", e)
-      
+  photo = random.choice(Vars.PICS)    
   message_effect_id = random.choice(Vars.EFF)
   ping = time.strftime("%Hh%Mm%Ss", time.gmtime(time.time() - Vars.PING))
   await message.reply_photo(
