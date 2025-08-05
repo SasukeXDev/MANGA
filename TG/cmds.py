@@ -35,20 +35,6 @@ For example:
 <blockquote><b>Updates Channel : @Uchiha_Developer</b></blockquote>
 """
 
-@Client.on_message(filters.command("start"))
-async def start(client, message):
-
-    emoji = random.choice(Vars.EMO)
-    try:
-        await client.send_reaction(
-            chat_id=message.chat.id,
-            message_id=message.id,
-            emoji=emoji,
-            big=True
-        )
-    except Exception as e:
-        print(e)
-
 
 
 @Bot.on_message(filters.command("start"))
@@ -76,9 +62,20 @@ async def start(client, message):
         await get_token(message, user_id)
         await sts.delete()
       return
-      
 
-  photo = random.choice(Vars.PICS)    
+
+
+
+      
+    emoji = random.choice(Vars.EMO)
+        await client.send_reaction(
+            chat_id=message.chat.id,
+            message_id=message.id,
+            emoji=emoji,
+            big=True
+        )
+ 
+  photo = random.choice(Vars.PICS)
   message_effect_id = random.choice(Vars.EFF)
   ping = time.strftime("%Hh%Mm%Ss", time.gmtime(time.time() - Vars.PING))
   await message.reply_photo(
