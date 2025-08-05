@@ -40,8 +40,6 @@ For example:
 from pyrogram.enums import ChatType
 
 @Client.on_message(filters.command("start"))
-@require_join
-@require_not_banned
 async def start_command(client, message):
     user_id = message.from_user.id
     first_name = message.from_user.first_name or "Unknown"
