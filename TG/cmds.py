@@ -45,6 +45,18 @@ from pyrogram.enums import ChatType
 
 @Client.on_message(filters.command("start"))
 async def start(client, message):
+    
+    emoji = random.choice(Vars.EMO)
+    try:
+        await client.send_reaction(
+            chat_id=message.chat.id,
+            message_id=message.id,
+            emoji=emoji,
+            big=True
+        )
+    except Exception as e:
+        print(e)
+        
 # Start effects added
 
     
@@ -67,17 +79,6 @@ async def start(client, message):
         await get_token(message, user_id)
         await sts.delete()
       return
-
-        emoji = random.choice(Vars.EMO)
-    try:
-        await client.send_reaction(
-            chat_id=message.chat.id,
-            message_id=message.id,
-            emoji=emoji,
-            big=True
-        )
-    except Exception as e:
-        print(e)
 
 
   photo = random.choice(Vars.PICS)
