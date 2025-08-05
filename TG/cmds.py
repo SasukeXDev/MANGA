@@ -37,6 +37,32 @@ For example:
 """
 
 
+from pyrogram.enums import ChatType
+
+@Client.on_message(filters.command("start"))
+@require_join
+@require_not_banned
+async def start_command(client, message):
+    user_id = message.from_user.id
+    first_name = message.from_user.first_name or "Unknown"
+    if not users_coll.find_one({"_id": user_id}):
+        users_coll.insert_one({"_id": user_id, "name": first_name})
+
+    emoji = random.choice(Vars.EMO)
+    try:
+        await client.send_reaction(
+            chat_id=message.chat.id,
+            message_id=message.id,
+            emoji=emoji,
+            big=True
+        )
+    except Exception as e:
+        print(e)
+
+
+
+
+
 @Bot.on_message(filters.command("start"))
 async def start(client, message):
 # Start effects added
@@ -64,16 +90,6 @@ async def start(client, message):
       return
 
 
-      # 🎉 Send emoji animation first
-    try:
-        await message.reply_animation(
-            emoji="🎉",
-            message_effect_id=MessageEffect.EFFECT_BOUNCE
-        )
-    except Exception as e:
-        print(f"Emoji effect failed: {e}")
-
- 
   photo = random.choice(Vars.PICS)
   emoji = random.choice(Vars.EMO)
   message_effect_id = random.choice(Vars.EFF)
