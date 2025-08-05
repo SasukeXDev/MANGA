@@ -37,14 +37,19 @@ For example:
 
 
 @Client.on_message(filters.command("start"))
-async def start_command(client, message):
-    emoji = random.choice(Vars.EMO)
+async def start_command(client: Client, message: Message):
+    await message.reply("Hey there! I'm alive 😁")
+
+    try:
         await client.send_reaction(
             chat_id=message.chat.id,
             message_id=message.id,
-            emoji=emoji,
+            emoji="👋",
             big=True
+            
         )
+    except Exception as e:
+        print(f"Failed to send reaction: {e}")
 
 
 
