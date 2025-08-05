@@ -67,6 +67,16 @@ async def start(client, message):
 
   photo = random.choice(Vars.PICS)
   emoji = random.choice(Vars.EMO)
+        try:
+        await client.send_reaction(
+            chat_id=message.chat.id,
+            message_id=message.id,
+            emoji=emoji,
+            big=True  # Optional: depends on if you want a big emoji animation
+        )
+    except Exception as e:
+        print("Failed to send reaction:", e)
+      
   message_effect_id = random.choice(Vars.EFF)
   ping = time.strftime("%Hh%Mm%Ss", time.gmtime(time.time() - Vars.PING))
   await message.reply_photo(
@@ -90,16 +100,6 @@ async def start(client, message):
                                       [        
                                          InlineKeyboardButton("Close", callback_data = "close")
                                      ]]))
-  
-      try:
-        await client.send_reaction(
-            chat_id=message.chat.id,
-            message_id=message.id,
-            emoji=emoji,
-            big=True  # Optional: depends on if you want a big emoji animation
-        )
-    except Exception as e:
-        print("Failed to send reaction:", e)
 
 
 @Bot.on_message(filters.private)
