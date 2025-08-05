@@ -36,7 +36,7 @@ For example:
 """
 
 @Client.on_message(filters.command("start"))
-async def start_command(client, message):
+async def start(client, message):
 
     emoji = random.choice(Vars.EMO)
     try:
