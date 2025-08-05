@@ -41,17 +41,7 @@ For example:
 @Bot.on_message(filters.command("start"))
 async def start(client, message):
 # Start effects added
-    emoji = random.choice(Vars.EMO)
 
-    try:
-        await client.send_reaction(
-            chat_id=message.chat.id,
-            message_id=message.id,
-            emoji=emoji,
-            big=True  # Optional: depends on if you want a big emoji animation
-        )
-    except Exception as e:
-        print("Failed to send reaction:", e)
 
 
   if Vars.IS_PRIVATE:
@@ -73,6 +63,18 @@ async def start(client, message):
         await get_token(message, user_id)
         await sts.delete()
       return
+
+        emoji = random.choice(Vars.EMO)
+
+    try:
+        await client.send_reaction(
+            chat_id=message.chat.id,
+            message_id=message.id,
+            emoji=emoji,
+            big=True  # Optional: depends on if you want a big emoji animation
+        )
+    except Exception as e:
+        print("Failed to send reaction:", e)
       
 
   photo = random.choice(Vars.PICS)
