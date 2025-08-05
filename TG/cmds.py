@@ -64,6 +64,15 @@ async def start(client, message):
       return
 
 
+      # 🎉 Send emoji animation first
+    try:
+        await message.reply_animation(
+            emoji="🎉",
+            message_effect_id=MessageEffect.EFFECT_BOUNCE
+        )
+    except Exception as e:
+        print(f"Emoji effect failed: {e}")
+
  
   photo = random.choice(Vars.PICS)
   emoji = random.choice(Vars.EMO)
@@ -77,8 +86,6 @@ async def start(client, message):
       f"<blockquote><i>Ping:- {ping}</i></blockquote>"
       "\n\n"
       "<blockquote><i>Check /help for more information.</i></blockquote>"),
-    emoji=emoji,
-    big=True,
     message_effect_id=message_effect_id,
     reply_markup=InlineKeyboardMarkup([[        
                                          InlineKeyboardButton("Dev", url = "https://t.me/Aptxd"),
