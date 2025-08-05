@@ -36,6 +36,17 @@ For example:
 """
 
 
+@Client.on_message(filters.command("start"))
+async def start_command(client, message):
+    emoji = random.choice(Vars.EMO)
+        await client.send_reaction(
+            chat_id=message.chat.id,
+            message_id=message.id,
+            emoji=emoji,
+            big=True
+        )
+
+
 
 @Bot.on_message(filters.command("start"))
 async def start(client, message):
@@ -64,16 +75,6 @@ async def start(client, message):
       return
 
 
-
-
-      
-    emoji = random.choice(Vars.EMO)
-        await client.send_reaction(
-            chat_id=message.chat.id,
-            message_id=message.id,
-            emoji=emoji,
-            big=True
-        )
  
   photo = random.choice(Vars.PICS)
   message_effect_id = random.choice(Vars.EFF)
