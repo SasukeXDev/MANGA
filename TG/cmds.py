@@ -78,15 +78,12 @@ async def start_command(client, message):
             return
 
         emoji = random.choice(Vars.EMO)
-        try:
-            await client.send_reaction(
+        await client.send_reaction(
                 chat_id=message.chat.id,
                 message_id=message.id,
                 emoji=emoji,
                 big=True,
             )
-        except Exception as e:
-            print(e)
 
     photo = random.choice(Vars.PICS)
     emoji = random.choice(Vars.EMO)
