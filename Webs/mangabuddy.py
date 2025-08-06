@@ -124,7 +124,7 @@ class MangaBuddyClient(MangaClient):
     async def contains_url(self, url: str):
         return url.startswith(self.base_url.geturl())
 
-    async def check_updated_urls(self, last_chapters: List[LastChapter]):
+    async def check_updated_urls(self, last_chapters: List[MangaChapter]):
 
         content = await self.get_url(self.home_page)
 
