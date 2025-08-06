@@ -40,7 +40,7 @@ users_txt = """
 
 web_data = {
     " Comick ": ComickWebs(),
-    " MangaBuddy ": MangaBuddyWebs(),
+    " MangaBuddy ": MangaBuddyClient(),
     " Asura Scans ": AsuraScansWebs(),
     #" Flame Comics": FlameComicsWebs(),
     #" Demonic Scans ": DemonicScansWebs(),
