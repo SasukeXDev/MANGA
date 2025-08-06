@@ -6,7 +6,7 @@ from typing import List, AsyncIterable
 from httpx import AsyncClient
 from pathlib import Path
 
-
+from tools import LanguageSingleton
 
 @dataclass
 class MangaCard:
