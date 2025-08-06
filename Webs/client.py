@@ -133,7 +133,7 @@ class MangaClient(AsyncClient, metaclass=LanguageSingleton):
     async def get_cover(self, manga_card: MangaCard, *args, **kwargs):
         return await self.get_url(manga_card.picture_url, *args, **kwargs)
 
-    async def check_updated_urls(self, last_chapters: List[LastChapter]):
+    async def check_updated_urls(self, last_chapters: List[MangaChapter]):
         return [lc.url for lc in last_chapters], []
 
     @abstractmethod
