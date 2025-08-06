@@ -1,7 +1,10 @@
+from .client import MangaClient, MangaCard, MangaChapter
+#Only for mangabuddy 
+
 from .comick import ComickWebs
 #from .mangamob import MangaMobWebs
-from .mangabuddy import MangaBuddyWebs
-
+#from .mangabuddy import MangaBuddyClient
+from .mangabuddy import MangaBuddyClient
 from .asurascans import AsuraScansWebs
 #from .flamecomics import FlameComicsWebs
 #from .demonicscans import DemonicScansWebs
