@@ -1,123 +1,145 @@
-from .scraper import Scraper
-from bs4 import BeautifulSoup
-from urllib.parse import urlparse, urljoin, quote_plus
 import re
-import json
+from dataclasses import dataclass
+from typing import List, AsyncIterable
+from urllib.parse import urlparse, urljoin, quote, quote_plus
 
-class MangaBuddyWebs(Scraper):
-  def __init__(self):
-    super().__init__()
-    self.url = "https://mangabuddy.com/"
-    self.bg = True
-    self.sf = "mb"
-    self.headers = {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0'
+from bs4 import BeautifulSoup
+
+from models import LastChapter
+from plugins.client import MangaClient, MangaCard, MangaChapter
+
+
+@dataclass
+class MangaBuddyCard(MangaCard):
+    read_url: str
+
+    def get_url(self):
+        return self.read_url
+
+
+class MangaBuddyClient(MangaClient):
+    base_url = urlparse("https://mangabuddy.com/")
+    search_url = urljoin(base_url.geturl(), "search")
+    search_param = 'q'
+    home_page = urljoin(base_url.geturl(), "home-page")
+    img_server = "https://s1.mbbcdnv1.xyz/file/img-mbuddy/manga/"
+
+    pre_headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0'
     }
 
-  async def search(self, query: str = "", page: int = 1):
-    search_url = f"{self.url}search?{quote_plus(query)}"
-    content = await self.get(search_url, headers=self.headers)
+    def __init__(self, *args, name="MangaBuddy", **kwargs):
+        super().__init__(*args, name=name, headers=self.pre_headers, **kwargs)
 
-    bs = BeautifulSoup(content, "html.parser")
-    cards = bs.find_all("div", {"class": "book-item"})
+    def mangas_from_page(self, page: bytes):
+        bs = BeautifulSoup(page, "html.parser")
 
-    results = []
-    for card in cards:
-      data = {}
-      anchor = card.a
-      if not anchor:
-        continue
+        cards = bs.find_all("div", {"class": "book-item"})
 
-      data['title'] = anchor.get("title").strip()
-      data['url'] = urljoin(self.url, anchor.get('href').strip())
-      data['poster'] = anchor.find("img").get('data-src').strip()
-      data['id'] = data['url'].split("/")[-1]
-      data['api_url'] = f'{self.url}api/manga{anchor.get("href").strip()}/chapters?source=detail'
-      results.append(data)
+        mangas = [card.a for card in cards if card.a is not None]
+        names = [manga.get("title").strip() for manga in mangas]
+        read_url = [urljoin(self.base_url.geturl(), manga.get('href').strip()) for manga in mangas]
+        url = [f'https://mangabuddy.com/api/manga{manga.get("href").strip()}/chapters?source=detail' for manga in mangas]
+        images = [manga.find("img").get('data-src').strip() for manga in mangas]
 
-    return results[(page - 1) * 20:page * 20] if page != 1 else results
+        mangas = [MangaBuddyCard(self, *tup) for tup in zip(names, url, images, read_url)]
 
-  async def get_chapters(self, data, page: int = 1):
-    content = await self.get(data['url'], headers=self.headers)
-    if content:
-      bs = BeautifulSoup(content, "html.parser")
-      
-      des = bs.find("div", class_="summary-content")
-      des = des.text.strip() if des else "N/A"
+        return mangas
 
-      genres = bs.find("div", class_="genres-content")
-      gen = " ".join(g.text.strip() for g in genres.find_all("a")) if genres else "N/A"
+    def chapters_from_page(self, page: bytes, manga: MangaCard = None):
+        bs = BeautifulSoup(page, "html.parser")
 
-      data['msg'] = f"<b>{data['title']}</b>\n\n"
-      data['msg'] += f"<b>Genres:</b> <blockquote expandable><code>{gen}</code></blockquote>\n\n"
-      data['msg'] += f"<b>Description:</b> <blockquote expandable><code>{des}</code></blockquote>\n"
+        ul = bs.find('ul', {'id': 'chapter-list'})
 
-      container = bs.find('ul', {'id': 'chapter-list'})
-      data['chapters'] = container
+        lis = ul.findAll('li')
+        a_elems = [li.find('a') for li in lis]
 
-    return data
+        links = [urljoin(self.base_url.geturl(), a.get('href')) for a in a_elems]
+        texts = [a.findNext('strong', {'class': 'chapter-title'}).text.strip() for a in a_elems]
 
-  def iter_chapters(self, data, page: int = 1):
-    chapters = []
-    items = data['chapters'].find_all('li') if data.get('chapters') else []
+        return list(map(lambda x: MangaChapter(self, x[0], x[1], manga, []), zip(texts, links)))
 
-    for li in items:
-      a_tag = li.find('a')
-      if not a_tag:
-        continue
+    def updates_from_page(self, page: bytes):
+        bs = BeautifulSoup(page, "html.parser")
 
-      title = a_tag.find('strong', {'class': 'chapter-title'}).text.strip()
-      url = urljoin(self.url, a_tag.get('href').strip())
+        div = bs.find('div', {'class': 'container__left'})
 
-      chapters.append({
-        "title": title,
-        "url": url,
-        "manga_title": data['title'],
-        "poster": data['poster']
-      })
+        manga_items = div.findAll('div', {'class': 'book-item'})
 
-    return chapters[(page - 1) * 20:page * 20] if page != 1 else chapters
+        urls = dict()
 
-  async def get_pictures(self, url, data=None):
-    content = await self.get(url, headers=self.headers)
-    regex = rb"var chapImages = '(.*)'"
-    try:
-      imgs = re.findall(regex, content)[0].decode().split(',')
-      return imgs
-    except IndexError:
-      return []
+        for manga_item in manga_items:
 
-  async def get_updates(self, page: int = 1):
-    content = await self.get(f"{self.url}home-page", headers=self.headers)
-    bs = BeautifulSoup(content, "html.parser")
-    container = bs.find('div', {'class': 'container__left'})
-    manga_items = container.find_all('div', {'class': 'book-item'}) if container else []
+            manga_url_part = manga_item.findNext('a').get('href')
+            manga_url = f'https://mangabuddy.com/api/manga{manga_url_part}/chapters?source=detail'
 
-    updates = []
+            chapter_item = manga_item.findNext("div", {"class": "chap-item"})
+            if not chapter_item or not chapter_item.a:
+                continue
+            chapter_url = urljoin(self.base_url.geturl(), chapter_item.a.get('href'))
 
-    for item in manga_items:
-      try:
-        manga_a = item.find('a')
-        if not manga_a:
-          continue
+            if manga_url not in urls:
+                urls[manga_url] = chapter_url
 
-        manga_href = manga_a.get('href')
-        manga_url = f"{self.url}api/manga{manga_href}/chapters?source=detail"
+        return urls
 
-        chapter_item = item.find("div", {"class": "chap-item"})
-        if not chapter_item or not chapter_item.a:
-          continue
+    async def pictures_from_chapters(self, content: bytes, response=None):
 
-        chapter_url = urljoin(self.url, chapter_item.a.get('href'))
+        regex = rb"var chapImages = '(.*)'"
 
-        updates.append({
-          "url": urljoin(self.url, manga_href),
-          "api_url": manga_url,
-          "chapter_url": chapter_url,
-          "manga_title": manga_a.get("title", "").strip(),
-          "title": chapter_url.split("/")[-1]
-        })
-      except Exception as e:
-        continue
+        imgs = re.findall(regex, content)[0].decode().split(',')
 
-    return updates
+        images_url = [img for img in imgs]
+
+        return images_url
+
+    async def search(self, query: str = "", page: int = 1) -> List[MangaCard]:
+        request_url = self.search_url
+
+        if query:
+            request_url = f'{request_url}?{self.search_param}={quote_plus(query)}'
+
+        content = await self.get_url(request_url)
+
+        return self.mangas_from_page(content)[(page - 1) * 20:page * 20]
+
+    async def get_chapters(self, manga_card: MangaCard, page: int = 1) -> List[MangaChapter]:
+
+        request_url = f'{manga_card.url}'
+
+        content = await self.get_url(request_url)
+
+        return self.chapters_from_page(content, manga_card)[(page - 1) * 20:page * 20]
+
+    async def iter_chapters(self, manga_url: str, manga_name) -> AsyncIterable[MangaChapter]:
+        manga_card = MangaCard(self, manga_name, manga_url, '')
+
+        request_url = f'{manga_card.url}'
+
+        content = await self.get_url(request_url)
+
+        for chapter in self.chapters_from_page(content, manga_card):
+            yield chapter
+
+    async def contains_url(self, url: str):
+        return url.startswith(self.base_url.geturl())
+
+    async def check_updated_urls(self, last_chapters: List[LastChapter]):
+
+        content = await self.get_url(self.home_page)
+
+        updates = self.updates_from_page(content)
+
+        updated = [lc.url for lc in last_chapters if updates.get(lc.url) and updates.get(lc.url) != lc.chapter_url]
+        not_updated = [lc.url for lc in last_chapters if not updates.get(lc.url)
+                       or updates.get(lc.url) == lc.chapter_url]
+
+        return updated, not_updated
+
+    async def get_cover(self, manga_card: MangaCard, *args, **kwargs):
+        headers = {**self.pre_headers, 'Referer': self.base_url.geturl()}
+        return await super(MangaBuddyClient, self).get_cover(manga_card, *args, headers=headers, **kwargs)
+
+    async def get_picture(self, manga_chapter: MangaChapter, url, *args, **kwargs):
+        headers = {**self.pre_headers, 'Referer': self.base_url.geturl()}
+        return await super(MangaBuddyClient, self).get_picture(manga_chapter, url, *args, headers=headers, **kwargs)
