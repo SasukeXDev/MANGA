@@ -1,18 +1,29 @@
-pyrogram==2.0.106
-tgcrypto
-# above is added
-requests
-cloudscraper
+
+aiohttp~=3.9.0
+aiosqlite
+alembic
+asyncpg
+beautifulsoup4~=4.8.0
 bs4
-reportlab
-pillow
-loguru
-Pyrofork
-tgcrypto-pyrofork
-pillow-avif-plugin # for avif files
-pillow-heif # for heif files
-pymongo
-PyPDF2
-psutil
+cloudscraper
+fpdf2~=2.6.0
 flask
 gunicorn
+httpx
+loguru
+Pillow~=10.1.0
+pillow-avif-plugin
+pillow-heif
+psutil~=5.9.0
+psycopg2-binary
+pyrogram==2.0.106
+PyPDF2
+pymongo
+pyrofork
+requests
+reportlab
+sqlmodel~=0.0.6
+SQLAlchemy
+tgcrypto
+tgcrypto-pyrofork
+
